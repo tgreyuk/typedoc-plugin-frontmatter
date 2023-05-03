@@ -2,4 +2,4 @@
 'typedoc-plugin-frontmatter': patch
 ---
 
-- Initial commit
+- Initial release.
