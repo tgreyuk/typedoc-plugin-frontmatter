@@ -7,7 +7,7 @@ import {
 import { FrontmatterEvent } from '../dist';
 import { getFrontmatterTags } from '../dist/tags';
 
-describe(`Frontmatter Plugin`, () => {
+describe(`With options and custom plugin`, () => {
   let app: Application;
   let project: ProjectReflection;
   let frontmatterEvent: FrontmatterEvent;
@@ -20,7 +20,7 @@ describe(`Frontmatter Plugin`, () => {
       entryPoints: ['./test/stubs.ts'],
       tsconfig: './tsconfig.test.json',
       logLevel: 'None',
-      out: './docs',
+      out: './docs/options',
       readme: 'none',
       plugin: ['./dist', './test/custom-plugin'],
       frontmatterGlobals: {
