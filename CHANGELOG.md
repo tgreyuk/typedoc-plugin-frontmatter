@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 4cc0ff9: - Ignore if no fronmatter data found
+- 4cc0ff9: - Ignore if no frontmatter data found
 
 ## 0.0.1
 
