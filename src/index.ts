@@ -2,34 +2,15 @@ import {
   Application,
   DeclarationReflection,
   PageEvent,
-  ParameterType,
   ProjectReflection,
 } from 'typedoc';
 import * as yaml from 'yaml';
 import { FrontmatterEvent } from './events';
+import { declareOptions } from './options';
 import { getFrontmatterTags } from './tags';
 
 export function load(app: Application) {
-  app.options.addDeclaration({
-    name: 'frontmatterGlobals',
-    help: '[typedoc-plugin-frontmatter] Specify static variables to be added to all frontmatter.',
-    type: ParameterType.Mixed,
-    defaultValue: {},
-  });
-
-  app.options.addDeclaration({
-    name: 'frontmatterTags',
-    help: '[typedoc-plugin-frontmatter] Specify which file comment tags should be added to frontmatter.',
-    type: ParameterType.Array,
-    defaultValue: [],
-  });
-
-  app.options.addDeclaration({
-    name: 'frontmatterTagsToSnakeCase',
-    help: '[typedoc-plugin-frontmatter] Jsdoc tags cannot be snake case. Tags by default must be camelCase',
-    type: ParameterType.Boolean,
-    defaultValue: false,
-  });
+  declareOptions(app);
 
   app.renderer.on(
     PageEvent.END,
@@ -62,9 +43,11 @@ export function load(app: Application) {
 
       app.renderer.trigger(event);
 
-      page.contents = page?.contents
-        ?.replace(/^/, `---\n${yaml.stringify(event.frontmatter)}---\n\n`)
-        .replace(/[\r\n]{3,}/g, '\n\n');
+      if (Object.keys(event.frontmatter).length) {
+        page.contents = page?.contents
+          ?.replace(/^/, `---\n${yaml.stringify(event.frontmatter)}---\n\n`)
+          .replace(/[\r\n]{3,}/g, '\n\n');
+      }
     },
   );
 }
